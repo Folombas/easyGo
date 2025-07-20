@@ -1,9 +1,8 @@
 package main
 
-import "fmt"
-
 func main() {
-	var info string = "Green Tea price is 50₽"
-
-	fmt.Println(info)
+	name := "Green Tea Flying Dragon"
+	price := 1.22
+	ready := true
+	count := 6
 }
