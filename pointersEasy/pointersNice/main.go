@@ -1,4 +1,4 @@
-package pointersnice
+package main
 
 import "fmt"
 
@@ -7,6 +7,6 @@ func main() {
 	ptr := &x // Указатель на x (адрес x)
 
 	fmt.Println(x)    // 37 - значение переменной x
-	fmt.Println(ptr)  // 0xc000... - адрес переменной x (например, 0xc000014078)
+	fmt.Println(ptr)  // 0xc00000a0a8 - адрес переменной x
 	fmt.Println(*ptr) // 37 - разыменовываем ptr -> получаем значение, на которое он указывает
 }
