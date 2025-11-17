@@ -3,10 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	numberOne := 1
-	pointerNumberOne := &numberOne
-	deName := *pointerNumberOne
-	fmt.Println(numberOne)
-	fmt.Println(pointerNumberOne)
+	var name string = "Gosha"
+	ptrName := &name
+	deName := *ptrName
+	fmt.Println(name)
+	fmt.Println(ptrName)
 	fmt.Println(deName)
 }
