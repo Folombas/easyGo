@@ -1,10 +1,9 @@
-
 package main
 
 import "fmt"
 
 func main() {
-	name := "Green Tea Flying Dragon"
+	name := "Зелёный чай ромашкой и мелиссой"
 	price := 2.55 // default is float64
 	ready := true
 	shopCount := 8
