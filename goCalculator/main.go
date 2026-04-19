@@ -1,25 +1,56 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strconv"
+	"strings"
 
 	"github.com/fatih/color"
 )
 
+func readInt(scanner *bufio.Scanner, prompt string) int {
+	for {
+		fmt.Print(prompt)
+		scanner.Scan()
+		input := strings.TrimSpace(scanner.Text())
+		val, err := strconv.Atoi(input)
+		if err == nil {
+			return val
+		}
+		color.Red("Ошибка: введите целое число!")
+	}
+}
+
+func readFloat(scanner *bufio.Scanner, prompt string) float64 {
+	for {
+		fmt.Print(prompt)
+		scanner.Scan()
+		input := strings.TrimSpace(scanner.Text())
+		// заменяем запятую на точку для удобства
+		input = strings.ReplaceAll(input, ",", ".")
+		val, err := strconv.ParseFloat(input, 64)
+		if err == nil {
+			return val
+		}
+		color.Red("Ошибка: введите число (целое или дробное)!")
+	}
+}
+
 func main() {
+	scanner := bufio.NewScanner(os.Stdin)
+
 	color.Cyan("╔════════════════════════════════════════════╗")
 	color.Cyan("║  🧮 GO КАЛЬКУЛЯТОР                        ║")
 	color.Cyan("║  Практикуем арифметику в Go!              ║")
 	color.Cyan("╚════════════════════════════════════════════╝")
 	fmt.Println()
 
-	// Ввод данных (в реальном проекте можно использовать bufio.Scanner)
-	num1 := 42
-	num2 := 8
-
-	color.Green("Даны два числа:")
-	fmt.Printf("  num1 = %d\n", num1)
-	fmt.Printf("  num2 = %d\n", num2)
+	// Ввод двух целых чисел
+	color.Green("Введите два целых числа:")
+	num1 := readInt(scanner, "  num1 = ")
+	num2 := readInt(scanner, "  num2 = ")
 	fmt.Println()
 
 	// Базовые операции
@@ -39,19 +70,25 @@ func main() {
 	color.Green("✖️ Умножение:")
 	fmt.Printf("  %d * %d = %d\n\n", num1, num2, product)
 
-	quotient := num1 / num2
-	remainder := num1 % num2
-	color.Green("➗ Деление и остаток:")
-	fmt.Printf("  %d / %d = %d (целочисленное)\n", num1, num2, quotient)
-	fmt.Printf("  %d %% %d = %d (остаток)\n\n", num1, num2, remainder)
+	if num2 != 0 {
+		quotient := num1 / num2
+		remainder := num1 % num2
+		color.Green("➗ Деление и остаток:")
+		fmt.Printf("  %d / %d = %d (целочисленное)\n", num1, num2, quotient)
+		fmt.Printf("  %d %% %d = %d (остаток)\n\n", num1, num2, remainder)
+	} else {
+		color.Red("  Деление на ноль невозможно!\n\n")
+	}
 
-	// Операции с плавающей точкой
+	// Ввод двух дробных чисел
+	color.Green("Теперь введите два дробных числа (разделитель точка или запятая):")
+	float1 := readFloat(scanner, "  float1 = ")
+	float2 := readFloat(scanner, "  float2 = ")
+	fmt.Println()
+
 	color.Yellow("┌────────────────────────────────────────┐")
 	color.Yellow("│  ОПЕРАЦИИ С ПЛАВАЮЩЕЙ ТОЧКОЙ          │")
 	color.Yellow("└────────────────────────────────────────┘")
-
-	float1 := 15.5
-	float2 := 4.0
 
 	fmt.Printf("Дано: float1 = %.2f, float2 = %.2f\n\n", float1, float2)
 
@@ -62,7 +99,11 @@ func main() {
 	fmt.Printf("  %.2f * %.2f = %.2f\n\n", float1, float2, float1*float2)
 
 	color.Green("➗ Деление:")
-	fmt.Printf("  %.2f / %.2f = %.2f\n\n", float1, float2, float1/float2)
+	if float2 != 0 {
+		fmt.Printf("  %.2f / %.2f = %.2f\n\n", float1, float2, float1/float2)
+	} else {
+		color.Red("  Деление на ноль невозможно!\n\n")
+	}
 
 	// Возведение в степень (через умножение)
 	color.Yellow("┌────────────────────────────────────────┐")
